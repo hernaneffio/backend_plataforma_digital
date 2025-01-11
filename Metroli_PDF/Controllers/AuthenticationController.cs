@@ -2,11 +2,13 @@
 using Microsoft.AspNetCore.Mvc;
 using Application.Interfaces.IServices;
 using Domain.Payload.Authentication;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Metroli_PDF.Controllers
 {
     [Route("api/authentication")]
     [ApiController]
+    [AllowAnonymous]
     public class AuthenticationController : ControllerBase
     {
         private readonly IAuthenticationService _authenticationService;
