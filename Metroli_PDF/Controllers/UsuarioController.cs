@@ -1,5 +1,4 @@
 ﻿using Application.Interfaces.IServices;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Metroli_PDF.Controllers

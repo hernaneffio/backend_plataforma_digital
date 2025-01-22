@@ -16,7 +16,12 @@ public static class DependencyInjection
         services.AddScoped<IAuthenticationService, AuthenticationService>();
         services.AddScoped<ITokenService, TokenService>();
         services.AddScoped<IUsuarioService, UsuarioService>();
+        services.AddScoped<IFileService, FileService>();
+        services.AddScoped<IFirmaService, FirmaService>();
+
         services.AddScoped<IUsuarioRepository, UsuarioRepository>();
+        services.AddScoped<IFileRepository, FileRepository>();
+        services.AddScoped<IFirmaRepository, FirmaRepository>();
 
         return services;
     }

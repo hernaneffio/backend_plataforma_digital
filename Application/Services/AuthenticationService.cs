@@ -1,15 +1,10 @@
-﻿using Application.Interfaces.IServices;
+﻿using Application.Interfaces.IRepository;
+using Application.Interfaces.IServices;
 using Domain.Entitites.Authentication;
 using Domain.Models;
 using Domain.Payload.Authentication;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
 using Microsoft.Extensions.Configuration;
-using Application.Interfaces.IRepository;
-using System.Text;
-using System.Threading.Tasks;
+using System.Net;
 
 namespace Application.Services;
 

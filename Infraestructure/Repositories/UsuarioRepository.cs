@@ -1,15 +1,10 @@
 ﻿using Application.Interfaces.IRepository;
+using Dapper;
 using Domain.Entitites.Usuario;
 using Domain.Payload.Authentication;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Npgsql;
-using Dapper;
-using Microsoft.AspNetCore.Http;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Infraestructure.Repositories;
 
