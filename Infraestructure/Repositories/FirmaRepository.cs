@@ -71,7 +71,7 @@ public class FirmaRepository : IFirmaRepository
         }
     }
 
-    public async Task<bool> existeFirmaRepositoryId(UpdateFirmaPayload payload)
+    public async Task<bool> existeFirmaRepositoryId(int id)
     {
         try
         {
@@ -89,7 +89,7 @@ public class FirmaRepository : IFirmaRepository
 
                 var parameters = new
                 {
-                    valor = payload.id
+                    valor = id
                 };
 
                 var result = await connection.QueryFirstOrDefaultAsync<int>(query, parameters);
@@ -112,7 +112,7 @@ public class FirmaRepository : IFirmaRepository
         }
     }
 
-    public async Task<List<FirmaEntity>> listarFirmaRepository()
+    public async Task<List<FirmaEntity>> listarFirmaRepository(string filtro)
     {
         try
         {
@@ -130,7 +130,16 @@ public class FirmaRepository : IFirmaRepository
                         WHERE f_estado=true
                     ";
 
-                result = connection.Query<FirmaEntity>(query).ToList();
+
+                DynamicParameters parameters = new DynamicParameters();
+
+                if (!string.IsNullOrEmpty(filtro))
+                {
+                    query += " AND f_descripcion = @cliente";
+                    parameters.Add("cliente", filtro);
+                }
+
+                result = connection.Query<FirmaEntity>(query, parameters).ToList();
 
             }
 
@@ -283,6 +292,42 @@ public class FirmaRepository : IFirmaRepository
     public async Task<string> listarFirmaRepository(UpdateFilePayload payload)
     {
         return "message";
+    }
+
+
+    public async Task<(bool, string)> deleteFirmaRepository(DeleteFirmaPayload payload)
+    {
+        try
+        {
+            using (var connection = new NpgsqlConnection(_connectionString))
+            //using (var connection = new NpgsqlConnection(_connectionString))
+            {
+
+                connection.Open();
+
+                string query = @" UPDATE metroli.mst_firmas
+                                  SET f_estado = @estado
+                                     WHERE f_id = @id;";
+
+
+                var parameters = new
+                {
+                    estado = false,
+                    id = payload.id
+                };
+
+                var result = await connection.QueryFirstOrDefaultAsync<int>(query, parameters);
+
+            }
+
+
+            return (true, "Succeeded");
+        }
+        catch (Exception ex)
+        {
+
+            return (false, $"Error : {ex.InnerException?.Message ?? ex.Message}");
+        }
     }
 
 

@@ -25,6 +25,9 @@ namespace Metroli_PDF.Controllers
         public async Task<ActionResult> updateFile([FromBody] UpdateFirmaPayload payload) => Ok(await _firmaService.updateFirma(payload));
 
         [HttpGet("listar")]
-        public async Task<ActionResult> listarFile() => Ok(await _firmaService.listarFirma());
+        public async Task<ActionResult> listarFile([FromQuery] string? cliente) => Ok(await _firmaService.listarFirma(cliente));
+
+        [HttpDelete("delete")]
+        public async Task<ActionResult> deleteFile([FromBody] DeleteFirmaPayload payload) => Ok(await _firmaService.deleteFirma(payload));
     }
 }

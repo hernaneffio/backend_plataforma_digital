@@ -10,5 +10,7 @@ public interface IFirmaService
 
     Task<MessageResult<string>> updateFirma(UpdateFirmaPayload payload);
 
-    Task<MessageResult<List<FirmaEntity>>> listarFirma();
+    Task<MessageResult<bool>> deleteFirma(DeleteFirmaPayload payload);
+
+    Task<MessageResult<List<FirmaEntity>>> listarFirma(string filtro);
 }
