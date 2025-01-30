@@ -2,6 +2,7 @@
 using Infraestructure.Repositories;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Org.BouncyCastle.Security;
 
 namespace Infraestructure;
 

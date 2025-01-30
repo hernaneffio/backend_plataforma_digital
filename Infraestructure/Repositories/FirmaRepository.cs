@@ -17,7 +17,7 @@ public class FirmaRepository : IFirmaRepository
     private readonly string _bucketName;
     private readonly string _connectionString;
 
-    public FirmaRepository(IConfiguration configuration, IConfiguration _configuration)
+    public FirmaRepository(IConfiguration configuration)
     {
         var awsOptions = configuration.GetSection("AWS");
         _bucketName = awsOptions["BucketName"];
@@ -27,7 +27,7 @@ public class FirmaRepository : IFirmaRepository
             awsOptions["SecretKey"],
             RegionEndpoint.GetBySystemName(awsOptions["Region"])
         );
-        _connectionString = _configuration.GetConnectionString("PostgresSQLConnection");
+        _connectionString = configuration.GetConnectionString("PostgresSQLConnection");
     }
 
     public async Task<bool> existeFirmaRepository(CreateFirmaPayload payload)
@@ -284,14 +284,6 @@ public class FirmaRepository : IFirmaRepository
         {
             return (null, $"Error : {ex.InnerException?.Message ?? ex.Message}");
         }
-    }
-
-
-
-
-    public async Task<string> listarFirmaRepository(UpdateFilePayload payload)
-    {
-        return "message";
     }
 
 

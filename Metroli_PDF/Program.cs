@@ -1,7 +1,9 @@
 using Metroli_PDF;
 using Microsoft.OpenApi.Models;
 using Metroli_PDF.Middleware;
+using Org.BouncyCastle.Security;
 using Infraestructure;
+using crypto;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -43,6 +45,7 @@ builder.Services.AddSwaggerGen((options) =>
 });
 
 var app = builder.Build();
+
 
 app.UseMiddleware<ErrorHandlerMiddleware>();
 
