@@ -13,6 +13,12 @@ public interface IFileRepository
 
     Task<bool> existeFileRepositoryId(int id);
 
+    Task<bool> existeFileRepositoryName(string value);
+
+    Task<string> existeFileRepositoryIdName(int id);
+
+    Task<string> updateFileRepository(UpdateFilePayload payload, string fileName);
+
     Task<(bool, string)> deleteFileRepository(DeleteFirmaPayload payload);
 
     Task<List<FileEntity>> listarFileRepository(string filtro);

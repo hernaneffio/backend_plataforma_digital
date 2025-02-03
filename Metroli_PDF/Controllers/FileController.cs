@@ -23,6 +23,9 @@ namespace Metroli_PDF.Controllers
         [HttpPost("create-new")]
         public async Task<ActionResult> createFileNew([FromBody] CreateFileNewPayload payload) => Ok(await _fileService.createFileNew(payload));
 
+        [HttpPut("update-file")]
+        public async Task<ActionResult> updateFile([FromBody] UpdateFilePayload payload) => Ok(await _fileService.updateFile(payload));
+
         [HttpDelete("delete")]
         public async Task<ActionResult> deleteFile([FromBody] DeleteFirmaPayload payload) => Ok(await _fileService.deleteFile(payload));
 

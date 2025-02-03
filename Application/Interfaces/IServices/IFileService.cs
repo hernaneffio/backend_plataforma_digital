@@ -12,6 +12,8 @@ public interface IFileService
 
     Task<MessageResult<string>> createFileNew(CreateFileNewPayload payload);
 
+    Task<MessageResult<string>> updateFile(UpdateFilePayload payload);
+
     Task<MessageResult<bool>> deleteFile(DeleteFirmaPayload payload);
 
     Task<MessageResult<List<FileEntity>>> listarFile(string filtro);

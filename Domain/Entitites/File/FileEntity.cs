@@ -17,4 +17,6 @@ public class FileEntity
     public DateTime fecha { get; set; }
 
     public bool estado { get; set; }
+
+    public bool firmado { get; set; }
 }

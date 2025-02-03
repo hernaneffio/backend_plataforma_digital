@@ -10,10 +10,8 @@ namespace Domain.Models;
 
 public class ErrorHandler : Exception
 {
-    [IgnoreDataMember]
     public HttpStatusCode Code { get; }
 
-    [DataMember(Name = "message")]
     public override string Message { get; }
 
     public object ExceptionData { get; }
