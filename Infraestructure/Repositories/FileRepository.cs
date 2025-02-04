@@ -367,7 +367,7 @@ public class FileRepository : IFileRepository
                                         @descripcion,
                                         @ruta,
                                         @estado,
-                                        now(),
+                                        @fecha,
                                         false); 
                                         SELECT LASTVAL();";
 
@@ -376,7 +376,8 @@ public class FileRepository : IFileRepository
                 {
                     descripcion = fileName,
                     ruta = rutaFile,
-                    estado = true
+                    estado = true,
+                    fecha = DateTime.Now
                 };
 
                 var result = await connection.QueryFirstOrDefaultAsync<int>(query, parameters);
@@ -561,8 +562,8 @@ public class FileRepository : IFileRepository
 
                 if (!string.IsNullOrEmpty(filtro))
                 {
-                    query += " AND p_descripcion = @archivo";
-                    parameters.Add("archivo", filtro);
+                    query += " AND p_descripcion LIKE @archivo";
+                    parameters.Add("archivo", $"%{filtro}%");
                 }
 
                 result = connection.Query<FileEntity>(query, parameters).ToList();
@@ -631,13 +632,15 @@ public class FileRepository : IFileRepository
 
                 string query = @" UPDATE metroli.mst_pdf
                                      SET p_ruta = @valor,
-                                          p_firmado = true
+                                          p_firmado = true,
+                                          p_fecha = @fecha
                                         WHERE p_id=@id and p_estado=true;";
 
                 var parameters = new
                 {
                     valor = fileUrl,
-                    id = id
+                    id = id,
+                    fecha = DateTime.Now
                 };
 
                 var result = await connection.QueryFirstOrDefaultAsync<int>(query, parameters);
