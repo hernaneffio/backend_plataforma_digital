@@ -41,7 +41,7 @@ public class FileService : IFileService
     }
 
 
-    public async Task<MessageResult<string>> createFileNew(CreateFileNewPayload payload)
+    public async Task<MessageResult<FileEntityCreate>> createFileNew(CreateFileNewPayload payload)
     {
         try
         {
@@ -58,7 +58,7 @@ public class FileService : IFileService
             if (result == null)
                 throw new ErrorHandler(HttpStatusCode.InternalServerError, message, null, internalResponse: 2, status: 500);
 
-            return MessageResult<string>.Of(message, result, (int?)HttpStatusCode.Accepted, 1);
+            return MessageResult<FileEntityCreate>.Of(message, result, (int?)HttpStatusCode.Accepted, 1);
         }
         catch (Exception ex)
         {

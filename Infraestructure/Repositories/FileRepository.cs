@@ -131,7 +131,7 @@ public class FileRepository : IFileRepository
     }
 
 
-    public async Task<(string, string)> createFileNewRepository(CreateFileNewPayload payload)
+    public async Task<(FileEntityCreate, string)> createFileNewRepository(CreateFileNewPayload payload)
     {
 
         try
@@ -169,15 +169,15 @@ public class FileRepository : IFileRepository
 
                 // Crear una imagen iText con la data de la firma
                 var signatureImage = new iText.Layout.Element.Image(imageData);
-                var widtFirma = 160;
-                var heightFirma = 60;
+                var widtFirma = 140;
+                var heightFirma = 89;
                 signatureImage.SetWidth(widtFirma); // Ajustar ancho de la firma
                 signatureImage.SetHeight(heightFirma); // Ajustar alto de la firma
 
                 // Insertar el QR en la primera página
                 var page = pdfDoc.GetLastPage();
                 var pageSize = page.GetPageSize();
-                var marginBottom = 90f; // Margen inferior
+                var marginBottom = 100f; // Margen inferior
                 var spacing = 20f; // Espacio entre marcos
 
 
@@ -245,9 +245,13 @@ public class FileRepository : IFileRepository
             // Devolver la URL del archivo guardado
             string fileUrl = $"https://{_bucketName}.s3.{RegionEndpoint.GetBySystemName("us-east-2").SystemName}.amazonaws.com/{key}";
 
-            await createFileRepositoryBD(payload.fileName, fileUrl);
+            var result = new FileEntityCreate();
 
-            return (fileUrl, "Succeeded");
+            result.fileRuta = fileUrl;
+
+            result.id = await createFileRepositoryBD(payload.fileName, fileUrl);
+
+            return (result, "Succeeded");
 
         }
         catch (Exception ex)
@@ -346,7 +350,7 @@ public class FileRepository : IFileRepository
     }
 
 
-    private async Task createFileRepositoryBD(string fileName, string rutaFile)
+    private async Task<int> createFileRepositoryBD(string fileName, string rutaFile)
     {
         try
         {
@@ -377,10 +381,12 @@ public class FileRepository : IFileRepository
                     descripcion = fileName,
                     ruta = rutaFile,
                     estado = true,
-                    fecha = DateTime.Now
+                    fecha = DateTime.UtcNow.AddHours(-5)
                 };
 
                 var result = await connection.QueryFirstOrDefaultAsync<int>(query, parameters);
+
+                return result;
 
             }
 
@@ -640,7 +646,7 @@ public class FileRepository : IFileRepository
                 {
                     valor = fileUrl,
                     id = id,
-                    fecha = DateTime.Now
+                    fecha = DateTime.UtcNow.AddHours(-5)
                 };
 
                 var result = await connection.QueryFirstOrDefaultAsync<int>(query, parameters);

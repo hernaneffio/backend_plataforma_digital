@@ -10,7 +10,7 @@ public interface IFileService
 {
     Task<MessageResult<string>> createFile(CreateFilePayload payload);
 
-    Task<MessageResult<string>> createFileNew(CreateFileNewPayload payload);
+    Task<MessageResult<FileEntityCreate>> createFileNew(CreateFileNewPayload payload);
 
     Task<MessageResult<string>> updateFile(UpdateFilePayload payload);
 

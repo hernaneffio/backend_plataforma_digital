@@ -9,7 +9,7 @@ public interface IFileRepository
 {
     Task<(string, string)> createFileRepository(CreateFilePayload payload);
 
-    Task<(string, string)> createFileNewRepository(CreateFileNewPayload payload);
+    Task<(FileEntityCreate, string)> createFileNewRepository(CreateFileNewPayload payload);
 
     Task<bool> existeFileRepositoryId(int id);
 
