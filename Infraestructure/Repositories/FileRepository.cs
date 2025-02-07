@@ -56,7 +56,7 @@ public class FileRepository : IFileRepository
                             .Trim(); // Elimina posibles espacios en los extremos
 
             // Ruta donde se guardará el archivo en S3
-            var key = $"pruebas/{filename}.pdf";
+            var key = $"reportes-pdf/{filename}.pdf";
 
             var fileBytes = Convert.FromBase64String(fileFirmasPdf);
             using var originalPdfStream = new MemoryStream(fileBytes);
@@ -147,7 +147,7 @@ public class FileRepository : IFileRepository
                             .Trim(); // Elimina posibles espacios en los extremos
 
             // Ruta donde se guardará el archivo en S3
-            var key = $"pruebas/{filename}.pdf";
+            var key = $"reportes-pdf/{filename}.pdf";
 
             var fileBytes = Convert.FromBase64String(payload.base64File);
             using var originalPdfStream = new MemoryStream(fileBytes);
@@ -598,7 +598,7 @@ public class FileRepository : IFileRepository
                             .Trim(); // Elimina posibles espacios en los extremos
 
             // Ruta donde se guardará el archivo en S3
-            var key = $"pruebas/{filename}.pdf";
+            var key = $"reportes-pdf/{filename}.pdf";
 
             // Configurar la solicitud de carga
             var request = new TransferUtilityUploadRequest
