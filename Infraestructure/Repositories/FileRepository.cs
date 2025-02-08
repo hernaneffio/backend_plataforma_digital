@@ -18,6 +18,8 @@ using System.Xml.Linq;
 using Domain.Payload.Firma;
 using Domain.Entitites.Firma;
 using Domain.Entitites.File;
+using System.Globalization;
+using System.Text;
 
 namespace Infraestructure.Repositories;
 
@@ -142,7 +144,7 @@ public class FileRepository : IFileRepository
             var fileBytesFirma = Convert.FromBase64String(payload.base64Firma.Replace("data:image/png;base64,", string.Empty));
             var imageData = ImageDataFactory.Create(fileBytesFirma);
 
-            var filename = payload.fileName
+            var filename = RemoveDiacritics(payload.fileName)
                             .Replace(" ", "-") // Reemplaza espacios con guiones
                             .Trim(); // Elimina posibles espacios en los extremos
 
@@ -260,6 +262,25 @@ public class FileRepository : IFileRepository
             return (null, $"Error : {ex.InnerException?.Message ?? ex.Message}");
         }
 
+    }
+
+
+    static string RemoveDiacritics(string text)
+    {
+        if (string.IsNullOrWhiteSpace(text)) return text;
+
+        string normalized = text.Normalize(NormalizationForm.FormD);
+        StringBuilder sb = new StringBuilder();
+
+        foreach (char c in normalized)
+        {
+            if (CharUnicodeInfo.GetUnicodeCategory(c) != UnicodeCategory.NonSpacingMark)
+            {
+                sb.Append(c);
+            }
+        }
+
+        return sb.ToString().Normalize(NormalizationForm.FormC);
     }
 
 
@@ -593,7 +614,7 @@ public class FileRepository : IFileRepository
             
             using var memoryStream = new MemoryStream(fileBytes);
 
-            var filename = fileName
+            var filename = RemoveDiacritics(fileName)
                             .Replace(" ", "-") // Reemplaza espacios con guiones
                             .Trim(); // Elimina posibles espacios en los extremos
 
