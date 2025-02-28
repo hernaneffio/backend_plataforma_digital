@@ -165,9 +165,10 @@ public class FileRepository : IFileRepository
                 string qrContent = $"https://{_bucketName}.s3.{RegionEndpoint.GetBySystemName("us-east-2").SystemName}.amazonaws.com/{key}";
                 var barcode = new BarcodeQRCode(qrContent);
                 var qrImage = new iText.Layout.Element.Image(barcode.CreateFormXObject(pdfDoc));
-                qrImage.SetWidth(90); // Ajusta el tamaño del QR
-                qrImage.SetHeight(90);
-
+                //qrImage.SetWidth(90); // Ajusta el tamaño del QR
+                //qrImage.SetHeight(90);
+                qrImage.SetWidth(292); // Ajusta el tamaño del QR
+                qrImage.SetHeight(292);
 
                 // Crear una imagen iText con la data de la firma
                 var signatureImage = new iText.Layout.Element.Image(imageData);
@@ -192,27 +193,27 @@ public class FileRepository : IFileRepository
                 float frameY = marginBottom;
 
                 // Dibujar el marco principal
-                var canvas = new PdfCanvas(page);
-                canvas.Rectangle(frameX, frameY, frameWidth, frameHeight);
-                canvas.SetStrokeColor(DeviceGray.BLACK);
-                canvas.Stroke();
+                //var canvas = new PdfCanvas(page);
+                //canvas.Rectangle(frameX, frameY, frameWidth, frameHeight);
+                //canvas.SetStrokeColor(DeviceGray.BLACK);
+                //canvas.Stroke();
 
-                ////Dibujar línea vertical central dentro del marco
-                float centerX = frameX + (frameWidth / 3);
-                canvas.MoveTo(centerX, frameY);
-                canvas.LineTo(centerX, frameY + frameHeight);
-                canvas.Stroke();
+                //////Dibujar línea vertical central dentro del marco
+                //float centerX = frameX + (frameWidth / 3);
+                //canvas.MoveTo(centerX, frameY);
+                //canvas.LineTo(centerX, frameY + frameHeight);
+                //canvas.Stroke();
 
-                float centerX2 = frameX + 2 * (frameWidth / 3);
-                canvas.MoveTo(centerX2, frameY);
-                canvas.LineTo(centerX2, frameY + frameHeight);
-                canvas.Stroke();
+                //float centerX2 = frameX + 2 * (frameWidth / 3);
+                //canvas.MoveTo(centerX2, frameY);
+                //canvas.LineTo(centerX2, frameY + frameHeight);
+                //canvas.Stroke();
 
                 // Posicionar elementos dentro del marco unificado
                 // - QR en la mitad izquierda
                 //float qrX = pageSize.GetWidth()/2 - frameWidth/6 - 50; // Margen interno izquierdo
-                float qrX = frameX + frameWidth / 6 - 45; // Margen interno izquierdo
-                float qrY = frameY + frameHeight / 2 - 45; // Margen inferior interno
+                float qrX = frameX + frameWidth / 6 - 146; // Margen interno izquierdo
+                float qrY = frameY + frameHeight / 2 - 146 + 30; // Margen inferior interno
                 qrImage.SetFixedPosition(pdfDoc.GetNumberOfPages(), qrX, qrY);
 
                 // - Firma en la mitad derecha
